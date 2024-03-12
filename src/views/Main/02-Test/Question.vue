@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed  } from 'vue'
 import QuestionCard from '@/components/test/QuestionCard.vue'
 import { NButton } from 'naive-ui'
 const value= defineModel("question_value")
@@ -49,15 +49,7 @@ function transformData(value) {
   });
 }
  
-onMounted(() => {
- 
-  watch(value.value, () => {
-    // console.log(value.value)
-    items.value = transformData(value.value)
-  }, { immediate: true });
-});
-// 使用Vue ref包装转换后的数据
-const items = ref(transformData(value))
+const items = computed(() => transformData(value.value))
 // const items = ref([
 //   { 
 //     id: 1,
@@ -135,18 +127,15 @@ const items = ref(transformData(value))
 // ]) 
 
 const logUserInputs = () => {
-  console.log('User inputs:');
+  console.log('----User inputs----');
   items.value.forEach((item) => {
     console.log(`Question ${item.id} (${item.question_type}):`);
     if (item.question_type === 'radio') {
-      // 注意，这里假设你有一个方式来确定哪个选项被选中了。
-      // 这可能需要在 QuestionCard 组件中处理，并更新 item 对象。
       const selectedOption = item.options.find(option => option.value === item.selectedOption);
-      console.log(`Selected option:`, selectedOption ? selectedOption.label : 'None selected');
+      console.log(selectedOption ? selectedOption.value : 'None selected');
     } else if (item.question_type === 'text') {
-      console.log(`Answer:`, item.value ? item.value : 'Unfilled');
+      console.log(item.value ? item.value : 'Unfilled');
     }
-    // 对于其他题型，可以按需扩展
   });
 };
 
