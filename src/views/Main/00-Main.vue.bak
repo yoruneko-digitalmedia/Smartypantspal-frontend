@@ -1,0 +1,71 @@
+<template>
+  <!-- Naive UI Layout Component -->
+  <!-- <n-message-provider> -->
+    <!-- <n-dialog-provider> -->
+      <n-layout class="body">
+        <!-- Naive UI Layout Header Component with navigation bar and theme switch -->
+        <n-layout-header bordered>
+          <!-- Naive UI Flex Component for flexible layout in the header -->
+          <n-flex class="nav_bar" justify="space-around" size="large">
+            <!-- Title -->
+            <div class="title">ITS</div>
+            <!-- Navigation Bar Component with prop -->
+            <navigationbar :NewPermissions="props.NewPermissions"/>
+            <!-- Theme Switch Component with event listener for theme change -->
+            <!-- <div> <ThemeSwitch @themeChange="handleChange" /> </div>  -->
+            <User :NewPermissions="props.NewPermissions"/><!--方案三: 做成額外的下拉式選單取代主題切換按鈕  -->
+          </n-flex>
+        </n-layout-header>
+        <!-- Nested Naive UI Layout Component -->
+        <n-layout>
+          <!-- Naive UI Message and Dialog Providers for global message and dialog handling -->
+              <!-- Container for router-view inside a scrollbar -->
+              <div class="router">
+                  <!-- Router View for displaying components based on routes -->
+                  <router-view v-model="theme"/>
+              </div>
+          
+        </n-layout>
+      </n-layout>
+    <!-- </n-dialog-provider>   -->
+  <!-- </n-message-provider> -->
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import navigationbar from '@/components/Main/Navigationbar.vue';
+import User from '@/components/Main/User.vue';
+import ThemeSwitch from '@/components/Main/ThemeSwitch.vue';
+import { 
+  NMessageProvider,
+  NDialogProvider,
+  NScrollbar, 
+  NLayout, 
+  NLayoutHeader,
+  NFlex,
+} from 'naive-ui';
+// Reactive variable for student number
+const theme = defineModel()
+const props = defineProps(['NewPermissions']);
+console.log('props.NewPermissions.isboss:', props.NewPermissions.isboss.value)
+console.log('props.NewPermissions.name:', props.NewPermissions.name.value)
+
+// Event emitter for emitting 'logout' and 'themeChange' events
+const emit = defineEmits(['themeChange']);
+
+// Event handler for theme change
+const handleChange = (value) => {
+  emit('themeChange', value);
+};
+
+// Set initial theme on component mount
+onMounted(() => {
+  // emit('themeChange', false);
+  watchEffect(() => {
+    console.log(theme.value) 
+  });
+});
+</script>
+
+<style scoped> 
+</style>

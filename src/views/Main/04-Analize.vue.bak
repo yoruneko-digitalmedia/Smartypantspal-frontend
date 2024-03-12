@@ -1,0 +1,18 @@
+<template>
+    <div class="Main">
+        <h1>數據分析</h1>
+    </div>  
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+
+.Main {
+    display: flex;
+    min-height: 90dvh;
+ 
+    color: white;
+  }
+</style>

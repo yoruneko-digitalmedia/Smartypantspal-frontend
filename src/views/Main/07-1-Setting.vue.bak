@@ -1,0 +1,35 @@
+<template>
+  <div class="Main">
+    <n-flex justify="center" style="padding: 2%">
+      <n-layout has-sider>
+        <n-layout>
+          <n-card embedded style="height: 80dvh; width: 35dvw; padding: 20px;">
+            <ThemeSwitch v-model="theme" />
+          </n-card>
+        </n-layout>
+      </n-layout>
+    </n-flex>
+  </div>
+</template>
+
+<script setup>
+import ThemeSwitch from '@/components/Main/ThemeSwitch.vue';
+const theme = defineModel()
+const active =ref(false)
+onMounted(() => {
+  watchEffect(() => {
+    console.log(theme.value )
+  });
+})
+
+</script>
+
+<style scoped>
+.Main {
+  display: flex;
+  justify-content: center;
+  height: 90vh;
+  width: 100vw;
+}
+</style>
+  

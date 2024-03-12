@@ -1,0 +1,56 @@
+<template>
+  <div style="padding: 10px;"> 
+    <n-flex vertical>
+      <n-select class="side_content" v-model:value="value1" :options="options1" />
+      <n-select class="side_content" v-model:value="value2" :options="options2" />
+      <Button class="side_content"></Button>
+      <Timer class="side_content" style="justify-content: center;"></Timer>
+      <Score class="side_content" ></Score>
+    </n-flex>
+  </div>
+  
+</template>
+
+<script setup>
+import Button from '@/components/test/SideMenu/Button.vue'
+import Timer from '@/components/test/SideMenu/Timer.vue'
+import Score from '@/components/test/SideMenu/Score.vue'
+import { h, defineComponent, ref } from "vue";
+import { NIcon } from "naive-ui";
+ 
+
+ 
+const value1 = ref()
+const value2 = ref()
+const options1= [
+        {
+          label: "Computer Vision",
+          value1: " ",
+         
+        },
+        {
+          label: "NLP",
+          value1: " ",
+         
+        }
+       
+      ]
+const options2= [
+        {
+          label: "Week1",
+          value1: "session1",
+         
+        },
+        {
+          label: "Week2",
+          value1: "session2",
+         
+        }
+       
+      ]
+
+const inverted = ref(false);
+</script>
+<style>
+ 
+</style>

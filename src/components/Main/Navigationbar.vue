@@ -1,0 +1,256 @@
+<template>
+  <!-- Menu component with Naive UI NMenu -->
+  <div>
+
+    <div v-if="isMenuVisible">
+      <n-menu v-model:value="activeKey" mode="horizontal" :options="menuOptions" responsive />
+    </div>
+    <div v-else-if="!isMenuVisible">
+      <!-- Toggle Button -->
+      <!-- <button @click="toggleMenu" class="menu-toggle-button"> -->
+      <!-- Menu -->
+      <!-- ����?�Ψ�?�Ӥ��ϥ� {{ }} -->
+      <!-- <n-icon v-slot="{ Component }">
+          <component :is="renderMenuIcon()"></component>
+        </n-icon> -->
+      <!-- </button> -->
+      <n-dropdown trigger="click" :options="menuOptions">
+        <n-button> 
+        <template #icon>
+          <n-icon>
+            <menus />
+          </n-icon>
+        </template>
+        Menu</n-button>
+      </n-dropdown>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// Import necessary functions and components from Vue
+import { defineComponent, h, onMounted, onUnmounted, ref, watch, onBeforeMount } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import { NMenu, NIcon } from "naive-ui";
+// ?�J���w??
+import { MenuOutline } from '@vicons/ionicons5';
+import {
+  HomeOutline as HomeIcon,
+  Build as BuildIcon,
+  PersonCircleOutline as personIcon,
+  LogOutOutline as LogOutIcon,
+  PeopleOutline as PeopleIcon,
+  PodiumOutline as Podium,
+  TrendingUpSharp as TrendingUp,
+  TerminalOutline as Terminal,
+  LibraryOutline as Library,
+  BookOutline as Book,
+  Menu as menus,
+  ChevronDownOutline as ChevronDown, 
+} from "@vicons/ionicons5";
+import axios from 'axios';
+
+// Set up router
+const route = useRouter();
+
+const renderMenuIcon = () => h(NIcon, null, { default: () => h(MenuOutline) });
+const windowWidth = ref(window.innerWidth);
+const isMenuVisible = ref(window.innerWidth >= 1380);
+// Define reactive variables and props
+const activeKey = ref('');
+const isMobile = ref(window.innerWidth < 768); // ��?768px?��???��?��?��
+// const emit = defineEmits(['logout']);
+const menu = defineComponent({
+  components: {
+    menus
+  }
+});
+
+
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth < 768;
+};
+
+
+const props = defineProps(['NewPermissions']);
+// console.log('props.NewPermissions.isboss:', props.NewPermissions.isboss.value)
+// console.log('props.NewPermissions.name:', props.NewPermissions.name.value)
+// console.log('props.NewPermissions.name:', String(props.NewPermissions.name.value))
+// const emit = defineEmits(['logout']);
+const isBoss = ref(true)
+// Define function to render icons
+const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
+const bossRef = ref(false);
+ 
+
+
+// Define menu options with links and icons
+const menuOptions = ref([
+  {
+    label: () => h(
+      RouterLink,
+      { to: { name: "Home" } },
+      { default: () => 'Home' }
+    ),
+    key: 'Home',
+    icon: renderIcon(HomeIcon)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      { to: { name: "history" } },
+      { default: () => 'Test System' }
+    ),
+    key: 'history',
+    icon: renderIcon(Book)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      { to: { name: "practice" } },
+      { default: () => 'Practice System' }
+    ),
+    key: 'practice',
+    icon: renderIcon(Library)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      { to: { name: "analize" } },
+      { default: () => 'Data Analysis' }
+    ),
+    key: 'analize',
+    icon: renderIcon(TrendingUp)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      
+      { to: { name: "manage" } },
+      { default: () => 'Backend System' }
+    ),
+    key: 'manage',
+    show: props.NewPermissions.isboss.value,
+    icon: renderIcon(Terminal)
+  },
+  {
+    label: () => h(
+      RouterLink,
+      { to: { name: "class" } },
+      { default: () => 'Teacher System' }
+    ),
+    key: 'class',
+    show: props.NewPermissions.isboss.value,
+    icon: renderIcon(Podium)
+  },
+  {
+    label:String(props.NewPermissions.name.value),
+    key: 'std',
+    icon: renderIcon(PeopleIcon),
+    show: false, 
+    children: [
+      {
+        label: () => h(
+          RouterLink,
+          { to: { name: "UserDashbroad" } },
+          { default: () => "User Dashboard" }
+        ),
+        key: "UserDashbroad",
+        icon: renderIcon(personIcon),
+      },
+      {
+        label: () => h(
+          RouterLink,
+          { to: { name: "setting" } },
+          { default: () => "Settings" }
+        ),
+        key: "setting",
+        icon: renderIcon(BuildIcon),
+      },
+      {
+        label: () => h(
+          'div',
+          {
+            onClick: logout,
+          },
+          { default: () => "Logout" }
+        ),
+        key: "logout",
+        icon: renderIcon(LogOutIcon),
+      }
+    ]
+  }
+]);
+watchEffect(() => {
+  if (!isMenuVisible.value) {
+    menuOptions.value[6].show = true
+  }else{
+    menuOptions.value[6].show = false
+  }
+  // console.log('isMenuVisible :', isMenuVisible.value);
+  // console.log('menuOptions :',menuOptions)
+  // console.log('isMenuVisible.rawvalue[6].show :', menuOptions.value[6].show)
+});
+// Define logout function
+const logout = async () => {
+  console.log('Starting logout process...');
+
+  try {
+    // Wait for Axios POST request to complete
+    const response = await axios.post('http://127.0.0.1/logout', {}, { withCredentials: true });
+    console.log("Logout successful:", response.data);
+
+    // Logic after API call completion and success
+    const logstatus = false;
+    // emit('logout', logstatus); //no use enow
+    console.log('Logout process completed');
+    route.push({ name: "Login" }) //direct to Login page
+  } catch (error) {
+    // Handle error if request fails
+    console.error("Logout failed:", error);
+    // message.error('Something went wrong during logout');
+  }
+};
+onBeforeMount(() => {
+  // Get the current route name and assign it to activeKey
+  activeKey.value = route.currentRoute.value.name;
+});
+
+onMounted(() => {
+
+  const handleResize = () => {
+    windowWidth.value = window.innerWidth;
+  }; // ��l?�Τ@���H?�m���̪�??
+  window.addEventListener('resize', handleResize);
+  // �ϥ�watchEffect��watch???windowWidth��?��
+  watch(windowWidth, (newWidth) => {
+    // ���unewWidth��s��L?�u��?��ާ@
+    // console.log(`New window width: ${newWidth}`);
+    if (newWidth >= 1380) {
+      isMenuVisible.value = true
+      // console.log('isMenuVisible:', isMenuVisible)
+    } else {
+      isMenuVisible.value = false
+      // console.log('isMenuVisible:', isMenuVisible)
+    }
+ 
+    handleResize();
+  });
+watchEffect(() => {
+  const newRouteName = route.currentRoute.value.name;
+  // console.log('Current Route:', newRouteName);
+  // console.log('activeKey.value:', activeKey.value);
+  if (newRouteName !== activeKey.value) {
+    activeKey.value = route.currentRoute.value.name;
+  }
+});
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize);
+  });
+});
+</script>
+<style>
+ 
+</style>
+

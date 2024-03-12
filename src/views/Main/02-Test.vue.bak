@@ -1,0 +1,37 @@
+<template >
+  <div class="Main" >
+    <n-space vertical  >
+    <!-- <n-space><n-switch v-model:value="inverted" />inverted</n-space> -->
+    <n-layout has-sider>
+      <n-layout-sider
+        bordered
+        collapse-mode="transform"
+        :collapsed-width="0"
+        :width="240"
+        show-trigger
+        class="Content"
+      >
+        <SideMenu></SideMenu>  
+      </n-layout-sider>
+      <n-layout class="Content">
+        <n-scrollbar>
+            <RouterView></RouterView>
+        </n-scrollbar>
+      </n-layout>
+    </n-layout>
+  </n-space>
+  </div>  
+</template>
+
+<script setup>
+import SideMenu from '@/components/test/SideMenu/SideMenu.vue';
+</script>
+
+<style scoped>
+.Main .Content{
+  flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+}
+</style>
+

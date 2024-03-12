@@ -1,0 +1,26 @@
+{
+  "name": "smartpantspal",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "vue": "^3.4.15",
+    "vue-cookies": "^1.8.3",
+    "vue-router": "^4.2.5",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vicons/ionicons5": "^0.12.0",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "naive-ui": "^2.37.3",
+    "unplugin-auto-import": "^0.17.5",
+    "vfonts": "^0.0.3",
+    "vite": "^5.0.11"
+  }
+}

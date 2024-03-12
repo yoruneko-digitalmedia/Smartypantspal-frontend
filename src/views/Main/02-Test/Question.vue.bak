@@ -1,0 +1,110 @@
+<template>
+  <n-card :bordered="false" style="flex-grow: 1;flex-direction: column; display: flex;">
+    <n-scrollbar style="max-height: 93vh">
+      <n-flex justify="space-around" size="large">
+        <n-flex class="table" vertical justify="space-around">
+          
+          <QuestionCard v-for="(item, index) in items" :key="index" :item="item" />
+          <n-button @click="logUserInputs">提交</n-button>
+  
+        </n-flex>
+      </n-flex>
+    </n-scrollbar>
+  </n-card>  
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import QuestionCard from '@/components/test/QuestionCard.vue'
+import { NButton } from 'naive-ui'
+const items = ref([
+  { 
+    id: 1,
+    question_title: 'title1', 
+    degree:'easy',
+    question_type:'radio',
+    options: [
+      { value: 'option1', label: 'aaaa'},
+      { value: 'option2', label: 'bbbb'},
+      { value: 'option3', label: 'cccc'},
+      { value: 'option4', label: 'dddd'},
+      // { value: 'option5', label: 'Option 5', disabled: false },
+      // { value: 'option6', label: 'Option 6', disabled: false },
+      // { value: 'option7', label: 'Option 7', disabled: false },
+      // { value: 'option8', label: 'Option 8', disabled: false },
+      // { value: 'option9', label: 'Option 9', disabled: false }
+    ] 
+  },
+ 
+  { 
+    id: 2,
+    question_title: 'title2', 
+    degree:'hard',
+    question_type:'text',
+    value: '',
+  },
+  { 
+    id: 3,
+    question_title: 'title3', 
+    degree:'median',
+    question_type:'radio',
+    options: [
+      { value: 'option1', label: 'qwetr'},
+      { value: 'option2', label: 'asdf'},
+      { value: 'option3', label: 'c vb'},
+      { value: 'option4', label: 'dftygj'},
+    ] 
+  },
+  { 
+    id: 3,
+    question_title: 'title3', 
+    degree:'median',
+    question_type:'radio',
+    options: [
+      { value: 'option1', label: 'qwetr'},
+      { value: 'option2', label: 'asdf'},
+      { value: 'option3', label: 'c vb'},
+      { value: 'option4', label: 'dftygj'},
+    ] 
+  },
+  { 
+    id: 3,
+    question_title: 'title3', 
+    degree:'median',
+    question_type:'radio',
+    options: [
+      { value: 'option1', label: 'qwetr'},
+      { value: 'option2', label: 'asdf'},
+      { value: 'option3', label: 'c vb'},
+      { value: 'option4', label: 'dftygj'},
+    ] 
+  },
+  { 
+    id: 3,
+    question_title: 'title3', 
+    degree:'median',
+    question_type:'radio',
+    options: [
+      { value: 'option1', label: 'qwetr'},
+      { value: 'option2', label: 'asdf'},
+      { value: 'option3', label: 'c vb'},
+      { value: 'option4', label: 'dftygj'},
+    ] 
+  },
+]) 
+
+const logUserInputs = () => {
+  console.log('input：')
+  items.value.forEach(item => {
+    if (item.type === 'radio') {
+      const selectedOption = item.options.find(option => option.value === item.selectedOption)
+      console.log(`Question ${item.id} :`, selectedOption ? selectedOption.label : 'Unselected')
+    } else if (item.type === 'text') {
+      console.log(`Question ${item.id} :`, item? item.value : 'Unfilled')
+    }
+    // 如果有更多题型，可以在这里添加处理逻辑
+  })
+}
+</script>
+ 
+  
