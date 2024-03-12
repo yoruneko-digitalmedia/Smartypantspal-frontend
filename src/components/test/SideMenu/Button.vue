@@ -28,7 +28,7 @@ const class_option = defineModel("class_option")
 const type_option = defineModel("type_option")
 
 // const emit = defineEmits(['themeChange', 'PermissionsUpdate']);
-let value= defineModel("question_value")
+let QuestionObj= defineModel("QuestionObj")
 const handleClick=() => {
   // console.log(class_option.value,'SDSDSD')
   router.push({ name: 'question' });
@@ -43,7 +43,7 @@ const handleClick=() => {
       // console.log("!!!!!!!!!!!");
       // console.log("@@", response.data[2].authInfo.isboss);
       // console.log('response ', response.data,response)
-      value.value = response.data
+      QuestionObj.value = response.data
       // console.log("Button.vue-value.value:", value.value)
       // emit('login-success', response.data); //no use now
     })

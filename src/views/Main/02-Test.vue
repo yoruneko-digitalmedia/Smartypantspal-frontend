@@ -11,11 +11,11 @@
         show-trigger
         class="Content"
       >
-        <SideMenu v-model:question_value="value"></SideMenu>  
+        <SideMenu v-model:QuestionObj="QuestionObj"></SideMenu>  
       </n-layout-sider>
       <n-layout class="Content">
         <n-scrollbar>
-            <RouterView v-model:question_value="value"></RouterView>
+            <RouterView v-model:QuestionObj="QuestionObj"></RouterView>
         </n-scrollbar>
       </n-layout>
     </n-layout>
@@ -25,26 +25,24 @@
 
 <script setup>
 import SideMenu from '@/components/test/SideMenu.vue';
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onBeforeUnmount, onMounted } from 'vue';
+ 
 
-// const value= ref({
-//   id: null, // 题目的唯一标识符，具体值应在添加题目时确定
-//   question_title: '', // 题目的标题或文本
-//   degree: '', // 题目的难度等级，可能的值为 'easy', 'median', 'hard'
-//   question_type: '', // 题目的类型，可能的值为 'radio' (选择题), 'text' (简答题)
-//   options: [], // 仅对选择题有效，包含题目的所有选项
-//   // 对于简答题，可以添加一个 'value' 字段来存储用户的答案
-//   value: '', // 用户的答案，仅对简答题有效
-// });
+const QuestionObj= ref([])
 
-const value= ref([])
+onMounted(() => {
+  const storedQuestionObj = localStorage.getItem('QuestionObj');
+  if (storedQuestionObj !== null || storedQuestionObj !== undefined) {
+    QuestionObj.value = JSON.parse(storedQuestionObj);
+  }
+});
+
+onBeforeUnmount(() => {
+  localStorage.setItem('QuestionObj', JSON.stringify(QuestionObj.value));
+});
 </script>
 
 <style scoped>
-.Main .Content{
-  flex-direction: column;
-  flex-grow: 1;
-  display: flex;
-}
+
 </style>
 

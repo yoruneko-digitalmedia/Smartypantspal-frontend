@@ -17,114 +17,40 @@
 import { ref, computed  } from 'vue'
 import QuestionCard from '@/components/test/QuestionCard.vue'
 import { NButton } from 'naive-ui'
-const value= defineModel("question_value")
-
+const QuestionObj= defineModel("QuestionObj")
+const items = computed(() => transformData(QuestionObj.value)) 
 function transformData(value) {
   if (!Array.isArray(value)) {
     // console.error('Expected an array');
     return [];
   }
   return value.map((item, index) => {
-    console.log('mapping');
+    // console.log('mapping');
     const degreeMap = { "容易": "easy", "中等": "median", "困难": "hard" };
     const typeMap = { "選擇題": "radio", "簡答題": "text" };
     let newItem = {
       id: index + 1,
-      question_title:  item.content,
+      
       degree: degreeMap[item.degree],
       question_type: typeMap[item.question_type],
     };
     
     if (item.question_type === "選擇題") {
+      const parts = item.content.split(',');
+      newItem.question_title = parts[0]; // 只取第一部分作為題目
       const options = item.content.split(',').slice(1).map((option, idx) => {
         const [value, label] = option.split('.');
         return { value: `option${idx + 1}`, label };
       });
       newItem.options = options;
     } else if (item.question_type === "簡答題") {
+      newItem.question_title = item.content,
       newItem.value = "";
     }
-    
+    console.log(newItem)
     return newItem;
   });
 }
- 
-const items = computed(() => transformData(value.value))
-// const items = ref([
-//   { 
-//     id: 1,
-//     question_title: 'title1', 
-//     degree:'easy',
-//     question_type:'radio',
-//     options: [
-//       { value: 'option1', label: 'aaaa'},
-//       { value: 'option2', label: 'bbbb'},
-//       { value: 'option3', label: 'cccc'},
-//       { value: 'option4', label: 'dddd'},
-//       // { value: 'option5', label: 'Option 5', disabled: false },
-//       // { value: 'option6', label: 'Option 6', disabled: false },
-//       // { value: 'option7', label: 'Option 7', disabled: false },
-//       // { value: 'option8', label: 'Option 8', disabled: false },
-//       // { value: 'option9', label: 'Option 9', disabled: false }
-//     ] 
-//   },
- 
-//   { 
-//     id: 2,
-//     question_title: 'title2', 
-//     degree:'hard',
-//     question_type:'text',
-//     value: '',
-//   },
-//   { 
-//     id: 3,
-//     question_title: 'title3', 
-//     degree:'median',
-//     question_type:'radio',
-//     options: [
-//       { value: 'option1', label: 'qwetr'},
-//       { value: 'option2', label: 'asdf'},
-//       { value: 'option3', label: 'c vb'},
-//       { value: 'option4', label: 'dftygj'},
-//     ] 
-//   },
-//   { 
-//     id: 3,
-//     question_title: 'title3', 
-//     degree:'median',
-//     question_type:'radio',
-//     options: [
-//       { value: 'option1', label: 'qwetr'},
-//       { value: 'option2', label: 'asdf'},
-//       { value: 'option3', label: 'c vb'},
-//       { value: 'option4', label: 'dftygj'},
-//     ] 
-//   },
-//   { 
-//     id: 3,
-//     question_title: 'title3', 
-//     degree:'median',
-//     question_type:'radio',
-//     options: [
-//       { value: 'option1', label: 'qwetr'},
-//       { value: 'option2', label: 'asdf'},
-//       { value: 'option3', label: 'c vb'},
-//       { value: 'option4', label: 'dftygj'},
-//     ] 
-//   },
-//   { 
-//     id: 3,
-//     question_title: 'title3', 
-//     degree:'median',
-//     question_type:'radio',
-//     options: [
-//       { value: 'option1', label: 'qwetr'},
-//       { value: 'option2', label: 'asdf'},
-//       { value: 'option3', label: 'c vb'},
-//       { value: 'option4', label: 'dftygj'},
-//     ] 
-//   },
-// ]) 
 
 const logUserInputs = () => {
   console.log('----User inputs----');
@@ -138,7 +64,4 @@ const logUserInputs = () => {
     }
   });
 };
-
 </script>
- 
-  

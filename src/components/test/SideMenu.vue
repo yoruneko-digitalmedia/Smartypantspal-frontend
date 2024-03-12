@@ -3,7 +3,7 @@
     <n-flex vertical>
       <n-select class="side_content" v-model:value="value1" :options="options1"  placeholder="Select Subject" />
       <n-select class="side_content" v-model:value="value2" :options="options2"  placeholder="Select Session"/>
-      <Button class="side_content" v-model:class_option="value1" v-model:type_option="value2" v-model:question_value="value"></Button>
+      <Button class="side_content" v-model:class_option="value1" v-model:type_option="value2" v-model:QuestionObj="QuestionObj"></Button>
       <Timer class="side_content" style="justify-content: center;"></Timer>
       <Score class="side_content" ></Score>
     </n-flex>
@@ -15,11 +15,10 @@
 import Button from '@/components/test/SideMenu/Button.vue'
 import Timer from '@/components/test/SideMenu/Timer.vue'
 import Score from '@/components/test/SideMenu/Score.vue'
-import { h, defineComponent, ref } from "vue";
+import { h, defineComponent, ref,onBeforeUnmount, onMounted } from "vue";
 import { NIcon } from "naive-ui";
 
-const value= defineModel("question_value")
-
+const QuestionObj= defineModel("QuestionObj")
  
 const value1 = ref()
 const value2 = ref()
@@ -53,7 +52,23 @@ const options2= [
       ]
 
 const inverted = ref(false);
- 
+onMounted(() => {
+  const storedvalue1 = localStorage.getItem('value1');
+  const storedvalue2 = localStorage.getItem('value2');
+
+  if (storedvalue1 !== null || storedvalue1 !== undefined) {
+    value1.value = JSON.parse(storedvalue1);
+  }
+  if (storedvalue2 !== null || storedvalue2 !== undefined) {
+    value2.value = JSON.parse(storedvalue2);
+  }
+});
+
+onBeforeUnmount(() => {
+  localStorage.setItem('value1', JSON.stringify(value1.value));
+  localStorage.setItem('value2', JSON.stringify(value2.value));
+
+});
 </script>
 <style>
  /* 适用于side_content?的通用居中?式 */
