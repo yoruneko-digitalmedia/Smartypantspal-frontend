@@ -15,7 +15,7 @@
       </n-layout-sider>
       <n-layout class="Content">
         <n-scrollbar>
-            <RouterView v-model:QuestionObj="QuestionObj"></RouterView>
+          <RouterView v-model:QuestionObj="QuestionObj"></RouterView>
         </n-scrollbar>
       </n-layout>
     </n-layout>

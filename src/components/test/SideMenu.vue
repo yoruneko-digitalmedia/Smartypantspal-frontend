@@ -3,7 +3,7 @@
     <n-flex vertical>
       <n-select class="side_content" v-model:value="value1" :options="options1"  placeholder="Select Subject" />
       <n-select class="side_content" v-model:value="value2" :options="options2"  placeholder="Select Session"/>
-      <Button class="side_content" v-model:class_option="value1" v-model:type_option="value2" v-model:QuestionObj="QuestionObj"></Button>
+      <Button class="side_content" :class_option="value1" :type_option="value2" v-model:QuestionObj="QuestionObj"></Button>
       <Timer class="side_content" style="justify-content: center;"></Timer>
       <Score class="side_content" ></Score>
     </n-flex>
@@ -22,8 +22,6 @@ const QuestionObj= defineModel("QuestionObj")
  
 const value1 = ref()
 const value2 = ref()
-const class_option = ref()
-const type_option = ref()
 const options1= [
         {
           label: "Computer Vision",
