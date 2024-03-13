@@ -1,13 +1,13 @@
 <template>
-  <n-card style="width: 50dvw;background-color: hsla(50, 0%, 70%, 0.1);">
+  <n-card style="width: 50dvw;background-color: hsla(50, 0%, 70%, 0.1); ">
     <template #header>
-      <span>{{ item.question_title }}</span>
+      <span>{{ item.id + ". " + item.question_title }}</span>
     </template>
     <!-- 判断题目类型是否为radio -->
     <n-radio-group v-if="item.question_type === 'radio'" v-model:value="item.selectedOption" :name="`radiobuttongroup${item.id}`" >
       <n-grid :cols="2" style="gap: 10px;">
         <n-grid-item v-for="(option, i) in item.options" :key="i">
-          <n-card :bordered="true" style="background-color: hsla(50, 0%, 70%, 0.1);">
+          <n-card :bordered="true" style="background-color: hsla(50, 0%, 70%, 0.15);">
             <n-radio
               :value="option.value"
               :disabled="option.disabled"
@@ -18,7 +18,7 @@
       </n-grid>
     </n-radio-group>
     <!-- 判断题目类型是否为text -->
-    <n-input v-else-if="item.question_type === 'text'" v-model:value="item.value" />
+    <n-input v-else-if="item.question_type === 'text'" v-model:value="item.value"  type="textarea"/>
     <!-- 其他类型的题目可以再加入其他的v-else-if或v-else -->
     <template #footer>
       <span>Degree: {{ item.degree }}</span>

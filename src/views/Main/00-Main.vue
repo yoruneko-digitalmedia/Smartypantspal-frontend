@@ -22,7 +22,7 @@
               <!-- Container for router-view inside a scrollbar -->
               <div class="router">
                   <!-- Router View for displaying components based on routes -->
-                  <router-view  v-model="theme"/>
+                  <router-view :NewPermissions="props.NewPermissions" v-model="theme"/>
               </div>
           
         </n-layout>

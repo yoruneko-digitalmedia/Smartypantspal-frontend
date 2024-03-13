@@ -15,7 +15,7 @@
       </n-layout-sider>
       <n-layout class="Content">
         <n-scrollbar>
-          <RouterView v-model:QuestionObj="QuestionObj"></RouterView>
+          <RouterView :NewPermissions="props.NewPermissions" v-model:QuestionObj="QuestionObj"></RouterView>
         </n-scrollbar>
       </n-layout>
     </n-layout>
@@ -29,6 +29,8 @@ import { ref, onBeforeUnmount, onMounted } from 'vue';
  
 
 const QuestionObj= ref([])
+const props = defineProps(['NewPermissions']);
+// console.log(props.NewPermissions)
 
 onMounted(() => {
   const storedQuestionObj = localStorage.getItem('QuestionObj');

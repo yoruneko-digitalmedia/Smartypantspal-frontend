@@ -11,11 +11,11 @@
         show-trigger
         class="Content"
       >
-        <SideMenu></SideMenu>  
+        <SideMenu v-model:QuestionObj="QuestionObj"></SideMenu>  
       </n-layout-sider>
       <n-layout class="Content">
         <n-scrollbar>
-            <RouterView></RouterView>
+          <RouterView v-model:QuestionObj="QuestionObj"></RouterView>
         </n-scrollbar>
       </n-layout>
     </n-layout>
@@ -24,14 +24,25 @@
 </template>
 
 <script setup>
-import SideMenu from '@/components/test/SideMenu/SideMenu.vue';
+import SideMenu from '@/components/test/SideMenu.vue';
+import { ref, onBeforeUnmount, onMounted } from 'vue';
+ 
+
+const QuestionObj= ref([])
+
+onMounted(() => {
+  const storedQuestionObj = localStorage.getItem('QuestionObj');
+  if (storedQuestionObj !== null || storedQuestionObj !== undefined) {
+    QuestionObj.value = JSON.parse(storedQuestionObj);
+  }
+});
+
+onBeforeUnmount(() => {
+  localStorage.setItem('QuestionObj', JSON.stringify(QuestionObj.value));
+});
 </script>
 
 <style scoped>
-.Main .Content{
-  flex-direction: column;
-  flex-grow: 1;
-  display: flex;
-}
+
 </style>
 

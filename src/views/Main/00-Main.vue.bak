@@ -22,7 +22,7 @@
               <!-- Container for router-view inside a scrollbar -->
               <div class="router">
                   <!-- Router View for displaying components based on routes -->
-                  <router-view v-model="theme"/>
+                  <router-view  v-model="theme"/>
               </div>
           
         </n-layout>
@@ -47,8 +47,8 @@ import {
 // Reactive variable for student number
 const theme = defineModel()
 const props = defineProps(['NewPermissions']);
-console.log('props.NewPermissions.isboss:', props.NewPermissions.isboss.value)
-console.log('props.NewPermissions.name:', props.NewPermissions.name.value)
+// console.log('props.NewPermissions.isboss:', props.NewPermissions.isboss.value)
+// console.log('props.NewPermissions.name:', props.NewPermissions.name.value)
 
 // Event emitter for emitting 'logout' and 'themeChange' events
 const emit = defineEmits(['themeChange']);
@@ -62,10 +62,23 @@ const handleChange = (value) => {
 onMounted(() => {
   // emit('themeChange', false);
   watchEffect(() => {
-    console.log(theme.value) 
+    // console.log(theme.value) 
   });
 });
 </script>
 
 <style scoped> 
+.title{
+  align-self: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 設置為視窗的高度 */
+}
+.router{
+  flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+}
 </style>
