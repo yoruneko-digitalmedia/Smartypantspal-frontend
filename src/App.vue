@@ -89,6 +89,7 @@ onMounted(() => {
     if(newtheme.value != undefined){
       switchTheme(newtheme.value)
     }
+    //全域禁止使用context menu
   });
 })
 </script>

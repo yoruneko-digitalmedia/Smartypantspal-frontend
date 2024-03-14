@@ -34,8 +34,8 @@
             </n-button>
           </n-tab-pane>
           <!-- Signup tab pane (commented out for simplicity) -->
-          <!--
-          <n-tab-pane name="signup" tab="Sign_up">
+
+             <n-tab-pane name="signup" tab="Sign_up">
             <n-form>
               <n-form-item-row label="User name">
                 <n-input v-model="username" />
@@ -54,7 +54,6 @@
               Sign up
             </n-button>
           </n-tab-pane>
-          -->
         </n-tabs>
       </n-card>
     </n-space>

@@ -37,6 +37,7 @@ onMounted(() => {
   if (storedQuestionObj !== null || storedQuestionObj !== undefined) {
     QuestionObj.value = JSON.parse(storedQuestionObj);
   }
+  //跳窗偵測
 });
 
 onBeforeUnmount(() => {
